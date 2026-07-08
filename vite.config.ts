@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev
 export default defineConfig({
-  base: '/', // ✨ Updated to single slash for apex root domains
+  base: '/', // 💎 Ensures assets look directly at the root of ventaailabs.com
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'],
