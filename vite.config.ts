@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev
 export default defineConfig({
-  base: '/Venta-Website-Templates/', // ✨ Updated to match your exact repository name
+  base: '/', // ✨ Updated to single slash for apex root domains
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'],
