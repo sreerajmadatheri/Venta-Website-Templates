@@ -6,7 +6,7 @@ const testimonials = [
     company: 'Vertex Labs',
     title: 'Infrastructure that finally scales',
     rating: 5,
-    comment: "We\'ve tried every automation platform on the market. Armory is the first one that didn\'t collapse under production load. Their agents just work.",
+    comment: "We\'ve tried every automation platform on the market. Venta AI Labs is the first one that didn\'t collapse under production load. Their agents just work.",
     author: 'Dr. Sarah Chen',
     role: 'CTO',
   },

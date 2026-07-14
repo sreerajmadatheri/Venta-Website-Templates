@@ -23,7 +23,7 @@ export default function Integrations() {
             Connects to everything
           </h2>
           <p className="text-[#6B7280] text-base max-w-lg mx-auto leading-relaxed">
-            Armory bridges your data and tools — Slack, GitHub, Salesforce, Stripe and hundreds more. One platform, zero silos.
+            Venta AI Labs bridges your data and tools — Slack, GitHub, Salesforce, Stripe and hundreds more. One platform, zero silos.
           </p>
         </div>
 
