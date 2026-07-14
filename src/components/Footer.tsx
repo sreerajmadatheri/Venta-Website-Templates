@@ -22,7 +22,7 @@ export default function Footer() {
             <div className="font-mono text-[11px] text-[#6B7280] space-y-1">
               <p>// 400 Neural Boulevard, Suite 18</p>
               <p>// San Francisco, CA 94107</p>
-              <p>// contact@ventaailabs</p>
+              <p>// contact@ventaailabs.com</p>
             </div>
           </div>
 
