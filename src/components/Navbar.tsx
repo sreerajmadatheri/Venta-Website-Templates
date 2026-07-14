@@ -44,9 +44,16 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* Desktop CTA Link Button */}
         <div className="hidden md:flex items-center gap-4">
-          <button className="btn-accent text-sm">Book A Call</button>
+          <a
+            href="https://calendly.com/contact-ventaailabs/30min" // ✨ Your Exact Live Link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-accent text-sm inline-block text-center cursor-pointer"
+          >
+            Book A Call
+          </a>
         </div>
 
         {/* Mobile toggle */}
@@ -71,7 +78,16 @@ export default function Navbar() {
               {link}
             </a>
           ))}
-          <button className="btn-accent w-full mt-2">Book A Call</button>
+          {/* Mobile CTA Link Button */}
+          <a
+            href="https://calendly.com/contact-ventaailabs/30min" // ✨ Your Exact Live Link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-accent w-full mt-2 inline-block text-center cursor-pointer"
+            onClick={() => setMenuOpen(false)}
+          >
+            Book A Call
+          </a>
         </div>
       )}
     </nav>
