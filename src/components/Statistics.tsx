@@ -90,7 +90,7 @@ export default function Statistics() {
               </div>
             </div>
             <p className="text-[#6B7280] text-xs mt-3 font-mono">
-              Watch how Armory agents process 10,000+ tasks/hour without degradation.
+              Watch how Venta AI Labs agents process 10,000+ tasks/hour without degradation.
             </p>
           </div>
         </div>

@@ -27,7 +27,7 @@ export default function Navbar() {
             <div className="absolute inset-0 border border-[#00FF88]/40 rounded-sm rotate-12" />
           </div>
           <span className="font-mono font-semibold text-lg tracking-wider text-[#F0F0F2]">
-            ARMORY
+            Venta AI Labs
           </span>
         </div>
 

@@ -62,7 +62,7 @@ export default function ProductShowcase() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
                   <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
                 </div>
-                <span className="font-mono text-[10px] text-[#6B7280]">workflow_v3.armory</span>
+                <span className="font-mono text-[10px] text-[#6B7280]">workflow_v3.Venta AI Labs</span>
                 <div className="flex items-center gap-1.5">
                   <Zap size={12} className="text-[#00FF88]" />
                   <span className="font-mono text-[10px] text-[#00FF88]">LIVE</span>

@@ -14,7 +14,7 @@ export default function Footer() {
                 <div className="absolute inset-0 border border-[#00FF88] rounded-sm rotate-45 scale-75" />
                 <div className="absolute inset-0 border border-[#00FF88]/40 rounded-sm rotate-12" />
               </div>
-              <span className="font-mono font-semibold text-lg tracking-wider text-[#F0F0F2]">ARMORY</span>
+              <span className="font-mono font-semibold text-lg tracking-wider text-[#F0F0F2]">Venta AI Labs</span>
             </div>
             <p className="text-[#6B7280] text-sm leading-relaxed max-w-xs mb-6">
               Neural infrastructure for the enterprises building tomorrow. Deploy smarter, scale faster.
@@ -22,7 +22,7 @@ export default function Footer() {
             <div className="font-mono text-[11px] text-[#6B7280] space-y-1">
               <p>// 400 Neural Boulevard, Suite 18</p>
               <p>// San Francisco, CA 94107</p>
-              <p>// hello@armory.ai</p>
+              <p>// contact@ventaailabs</p>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-[#1E1E24] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-mono text-[11px] text-[#6B7280]">
-            ©2026 Armory AI Inc. All rights reserved.
+            ©2026 Venta AI Labs AI Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse" />
