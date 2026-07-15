@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const cases = [
@@ -28,7 +27,7 @@ const cases = [
     industry: 'Enterprise IT',
     result: 'Automation of office work and regular updation across corporate databases with zero human intervention.',
     tech: ['API Sync', 'Data Pipeline', 'Workflows'],
-    color: '#A855F7', // Deep purple accent color for visual distinction
+    color: '#A855F7',
   },
 ];
 
@@ -52,7 +51,6 @@ export default function CaseStudies() {
           </p>
         </div>
 
-        {/* Updated grid layout to handle 4 items elegantly: grid-cols-1 md:grid-cols-2 lg:grid-cols-4 */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {cases.map((c, i) => (
             <div

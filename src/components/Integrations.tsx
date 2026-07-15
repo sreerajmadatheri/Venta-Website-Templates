@@ -15,7 +15,7 @@ export default function Integrations() {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
-    <section className="relative py-28 px-6"> {/* Removed conflicting ID */}
+    <section className="relative py-28 px-6">
       <div className="max-w-7xl mx-auto text-center">
         <div ref={ref} className={`reveal ${visible ? 'visible' : ''} mb-14`}>
           <p className="section-label">INTEGRATIONS</p>

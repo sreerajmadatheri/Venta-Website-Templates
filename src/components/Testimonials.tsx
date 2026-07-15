@@ -60,7 +60,7 @@ export default function Testimonials() {
                 <span className="font-mono text-[10px] text-[#00FF88]/60 tracking-wider">{t.company.toUpperCase()}</span>
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, j) => (
-                    <Star key={`${t.company}-star-${j}`} size={10} className="text-[#F59E0B] fill-[#F59E0B]" /> // Corrected unique key definition
+                    <Star key={`${t.company}-star-${j}`} size={10} className="text-[#F59E0B] fill-[#F59E0B]" />
                   ))}
                 </div>
               </div>

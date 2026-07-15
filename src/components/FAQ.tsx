@@ -14,11 +14,17 @@ const faqs = [
 
 export default function FAQ() {
   const [activeTab, setActiveTab] = useState('Overview');
-  const [openQuestion, setOpenQuestion] = useState<string | null>(null); // State tracked by unique question string
+  const [openQuestion, setOpenQuestion] = useState<string | null>(null);
 
   const { ref, visible } = useReveal<HTMLDivElement>();
-
   const filtered = faqs.filter((f) => f.cat === activeTab);
+
+  const handleContactScroll = () => {
+    const target = document.getElementById('contact') || document.getElementById('newsletter');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <section id="faq" className="relative py-28 px-6">
@@ -73,7 +79,14 @@ export default function FAQ() {
         </div>
 
         <p className="text-center text-[#6B7280] text-xs font-mono mt-12">
-          Have a unique infrastructure requirement? <span className="text-[#00FF88] underline cursor-pointer">Get in touch</span> with engineering.
+          Have a unique infrastructure requirement?{' '}
+          <span
+            onClick={handleContactScroll}
+            className="text-[#00FF88] underline cursor-pointer hover:text-[#00E577] transition-colors"
+          >
+            Get in touch
+          </span>{' '}
+          with engineering.
         </p>
       </div>
     </section>

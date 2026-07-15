@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-// Maps display names to their section IDs in App.tsx
 const navItems = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
   { name: 'Projects', href: '#projects' },
-  { name: 'Capabilities', href: '#product' },
+  { name: 'Capabilities', href: '#product-showcase' },
   { name: 'Articles', href: '#articles' },
   { name: 'Contact', href: '#contact' },
 ];
@@ -25,9 +24,9 @@ export default function Navbar() {
     e.preventDefault();
     const target = document.querySelector(href);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    setMenuOpen(false); // Close mobile menu if open
+    setMenuOpen(false);
   };
 
   return (
