@@ -6,7 +6,7 @@ const testimonials = [
     company: 'Vertex Labs',
     title: 'Infrastructure that finally scales',
     rating: 5,
-    comment: "We\'ve tried every automation platform on the market. Venta AI Labs is the first one that didn\'t collapse under production load. Their agents just work.",
+    comment: "We've tried every automation platform on the market. Venta AI Labs is the first one that didn't collapse under production load. Their agents just work.",
     author: 'Dr. Sarah Chen',
     role: 'CTO',
   },
@@ -31,21 +31,20 @@ const testimonials = [
     title: 'Our team moved 3x faster overnight',
     rating: 5,
     comment: 'The workflow builder is genuinely intuitive. Non-technical stakeholders can now modify agent logic without touching code. That was unthinkable before.',
-    author: 'Priya Nair',
+    author: 'Elena Rostova',
     role: 'Product Director',
   },
 ];
 
 export default function Testimonials() {
-  const { ref: headingRef, visible: headingVisible } = useReveal();
-  const { ref: gridRef, visible: gridVisible } = useReveal();
+  const { ref: headingRef, visible: headingVisible } = useReveal<HTMLDivElement>();
+  const { ref: gridRef, visible: gridVisible } = useReveal<HTMLDivElement>();
 
   return (
     <section className="relative py-28 px-6 border-t border-[#1E1E24]">
-      <div className="absolute inset-0 radial-glow pointer-events-none opacity-40" />
       <div className="max-w-7xl mx-auto">
         <div ref={headingRef} className={`reveal ${headingVisible ? 'visible' : ''} text-center mb-16`}>
-          <p className="section-label">TESTIMONIALS</p>
+          <p className="section-label">FEEDBACK</p>
           <h2 className="text-4xl md:text-5xl font-bold text-[#F0F0F2] tracking-tight">
             Trusted by the pioneers
           </h2>
@@ -61,15 +60,18 @@ export default function Testimonials() {
                 <span className="font-mono text-[10px] text-[#00FF88]/60 tracking-wider">{t.company.toUpperCase()}</span>
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, j) => (
-                    <Star key={j} size={10} className="text-[#F59E0B] fill-[#F59E0B]" />
+                    <Star key={`${t.company}-star-${j}`} size={10} className="text-[#F59E0B] fill-[#F59E0B]" /> // Corrected unique key definition
                   ))}
                 </div>
               </div>
               <h4 className="text-[#F0F0F2] font-semibold text-sm leading-snug">{t.title}</h4>
               <p className="text-[#6B7280] text-xs leading-relaxed flex-1">"{t.comment}"</p>
-              <div className="pt-3 border-t border-[#1E1E24]">
-                <p className="text-[#9CA3AF] text-xs font-medium">{t.author}</p>
-                <p className="text-[#6B7280] text-[10px] font-mono">{t.role} · {t.company}</p>
+              <div className="pt-3 border-t border-[#1E1E24] flex items-center justify-between">
+                <div>
+                  <p className="text-[#F0F0F2] font-medium text-[11px]">{t.author}</p>
+                  <p className="text-[#6B7280] text-[9px] font-mono mt-0.5">{t.role}</p>
+                </div>
+                <span className="font-mono text-[10px] text-[#00FF88]/40">// VERIFIED</span>
               </div>
             </div>
           ))}

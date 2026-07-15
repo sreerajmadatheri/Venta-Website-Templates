@@ -20,82 +20,62 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20">
       {/* Background grid */}
       <div className="absolute inset-0 grid-bg opacity-60 pointer-events-none" />
       {/* Radial glow */}
-      <div className="absolute inset-0 radial-glow pointer-events-none" />
-      {/* Top gradient */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0A0A0B] to-transparent pointer-events-none" />
-      {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0A0B] to-transparent pointer-events-none" />
+      <div className="absolute inset-0 radial-glow pointer-events-none opacity-40" />
 
-      {/* Glowing orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00FF88]/4 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#0EA5E9]/4 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Rotating ticker */}
-        <div className="flex items-center justify-center mb-8">
-          <div className="border border-[#1E1E24] rounded-full px-5 py-2 bg-[#111114]/80 backdrop-blur-sm flex items-center gap-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse" />
-            <div className="h-5 overflow-hidden relative w-48 text-left">
-              {keywords.map((kw, i) => (
-                <span
-                  key={kw}
-                  className="absolute inset-0 font-mono text-xs text-[#9CA3AF] flex items-center transition-all duration-500"
-                  style={{
-                    opacity: i === activeKeyword ? 1 : 0,
-                    transform: i === activeKeyword ? 'translateY(0)' : i < activeKeyword ? 'translateY(-100%)' : 'translateY(100%)',
-                  }}
-                >
-                  {kw}
-                </span>
-              ))}
-            </div>
-            <span className="text-[#1E1E24]">·</span>
-            <div className="flex gap-2">
-              {keywords.map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-1 h-1 rounded-full transition-all duration-300 ${
-                    i === activeKeyword ? 'bg-[#00FF88]' : 'bg-[#1E1E24]'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+      <div className="max-w-4xl mx-auto px-6 text-center relative z-10 flex flex-col items-center gap-8">
+        {/* Release Pill */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#1E1E24] bg-[#111114]/80 backdrop-blur-sm animate-fade-up">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse" />
+          <span className="font-mono text-[10px] tracking-wider text-[#9CA3AF] uppercase">
+            Venta AI Labs v2.0 Platform Live
+          </span>
         </div>
 
-        {/* Headline */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-6">
-          <span className="text-[#F0F0F2]">Power your </span>
-          <br />
-          <span className="accent-gradient">future</span>
-          <span className="text-[#F0F0F2]"> with AI</span>
+        {/* Heading */}
+        <h1 className="text-5xl md:text-7xl font-bold text-[#F0F0F2] tracking-tight leading-[1.1] animate-fade-up [animation-delay:200ms]">
+          We Build Custom<br />
+          <span key={activeKeyword} className="accent-gradient h-20 inline-block transition-all duration-500">
+            {keywords[activeKeyword]}
+          </span>
         </h1>
 
-        {/* Subline */}
-        <p className="text-[#9CA3AF] text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-          Deploy custom enterprise agents and automate complex workflows.
-          Scale your intelligence today.
+        {/* Subtitle */}
+        <p className="text-[#6B7280] text-base md:text-lg max-w-xl leading-relaxed animate-fade-up [animation-delay:400ms]">
+          Deploy production-ready LLM pipelines, autonomous agents, and intelligence-led workflows customized to your private business logic.
         </p>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <button className="btn-accent flex items-center gap-2 px-7 py-3 text-base">
+        {/* Action buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-up [animation-delay:600ms]">
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="btn-accent flex items-center gap-2 px-7 py-3 text-base cursor-pointer"
+          >
             Build A Workflow
             <ArrowRight size={16} />
           </button>
-          <button className="btn-outline flex items-center gap-2 px-7 py-3 text-base">
+          <button
+            onClick={() => scrollToSection('about')}
+            className="btn-outline flex items-center gap-2 px-7 py-3 text-base cursor-pointer"
+          >
             <Zap size={15} className="text-[#00FF88]" />
             View Capabilities
           </button>
         </div>
 
         {/* Stats strip */}
-        <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-[#6B7280]">
+        <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-[#6B7280] mt-4 animate-fade-up [animation-delay:800ms]">
           {['500+ Workflows Deployed', '99.99% Uptime', 'Fortune 500 Clients', 'SOC 2 Certified'].map((stat) => (
             <div key={stat} className="flex items-center gap-2">
               <div className="w-1 h-1 rounded-full bg-[#00FF88]/60" />
@@ -110,10 +90,10 @@ export default function Hero() {
         <div className="marquee-track">
           {marqueeItems.map((item, i) => (
             <div key={i} className="flex items-center gap-6 px-8 whitespace-nowrap">
-              <span className="font-mono text-xs text-[#6B7280] tracking-widest uppercase">
-                {item}
+              <span className="font-mono text-[11px] text-[#6B7280] tracking-wider font-semibold">
+                {item.toUpperCase()}
               </span>
-              <span className="text-[#00FF88]/30 text-xs">◆</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-[#1E1E24]" />
             </div>
           ))}
         </div>
