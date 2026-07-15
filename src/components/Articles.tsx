@@ -28,12 +28,13 @@ const articles = [
   },
 ];
 
-export default function Articles() {
+export default function Articles({ id }: { id?: string }) {
   const { ref: headingRef, visible: headingVisible } = useReveal();
   const { ref: gridRef, visible: gridVisible } = useReveal();
 
   return (
-    <section id="articles" className="relative py-28 px-6">
+    <section id={id} className="relative py-28 px-6">
+      {/* Rest of the component continues unchanged */}
       <div className="max-w-7xl mx-auto">
         <div ref={headingRef} className={`reveal ${headingVisible ? 'visible' : ''} flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16`}>
           <div>

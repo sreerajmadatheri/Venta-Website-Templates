@@ -13,82 +13,69 @@ const nodes = [
   { id: 'if', label: 'If / Else', icon: GitBranch, x: 28, y: 38, color: '#F59E0B' },
   { id: 'agent', label: 'AI Agent', icon: Cpu, x: 51, y: 38, color: '#00FF88' },
   { id: 'email2', label: 'Send Email', icon: Mail, x: 74, y: 18, color: '#0EA5E9' },
-  { id: 'tg', label: 'Telegram', icon: MessageSquare, x: 74, y: 58, color: '#0EA5E9' },
+  { id: 'slack', label: 'Post Slack', icon: MessageSquare, x: 74, y: 58, color: '#E01E5A' },
 ];
 
-function Node({ label, icon: Icon, x, y, color }: { label: string; icon: any; x: number; y: number; color: string }) {
+function Node({ label, icon: Icon, x, y, color }: typeof nodes[0]) {
   return (
     <div
-      className="absolute flex flex-col items-center gap-1.5 group"
-      style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
+      className="absolute border border-[#1E1E24] bg-[#111114] rounded-lg p-3 flex items-center gap-2.5 shadow-xl hover:border-[#00FF88]/20 transition-colors cursor-grab active:cursor-grabbing"
+      style={{ left: `${x}%`, top: `${y}%`, transform: 'translateY(-50%)' }}
     >
-      <div
-        className="w-12 h-12 rounded-xl border flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-        style={{ borderColor: `${color}30`, background: `${color}10` }}
-      >
-        <Icon size={18} style={{ color }} />
+      <div className="w-6 h-6 rounded flex items-center justify-center shrink-0" style={{ background: `${color}10` }}>
+        <Icon size={12} style={{ color }} />
       </div>
-      <span className="font-mono text-[9px] text-[#6B7280] tracking-wide whitespace-nowrap">{label}</span>
+      <span className="font-mono text-[10px] text-[#F0F0F2] font-semibold whitespace-nowrap">{label}</span>
     </div>
   );
 }
 
-export default function ProductShowcase() {
-  const { ref: headingRef, visible: headingVisible } = useReveal();
-  const { ref: canvasRef, visible: canvasVisible } = useReveal();
+export default function ProductShowcase({ id }: { id?: string }) {
+  const { ref: headingRef, visible: headingVisible } = useReveal<HTMLDivElement>();
+  const { ref: canvasRef, visible: canvasVisible } = useReveal<HTMLDivElement>();
+  const { ref: gridRef, visible: gridVisible } = useReveal<HTMLDivElement>(); // Correctly typed ref declarations
 
   return (
-    <section id="pricing" className="relative py-28 px-6">
-      <div className="absolute inset-0 radial-glow pointer-events-none" />
+    <section id={id} className="relative py-28 px-6">
       <div className="max-w-7xl mx-auto">
         <div ref={headingRef} className={`reveal ${headingVisible ? 'visible' : ''} text-center mb-16`}>
-          <p className="section-label">OUR PRODUCT</p>
+          <p className="section-label">VISUAL CANVAS</p>
           <h2 className="text-4xl md:text-5xl font-bold text-[#F0F0F2] tracking-tight mb-4">
-            Build logic at scale
+            Build with drag-and-drop clarity
           </h2>
-          <p className="text-[#6B7280] max-w-lg mx-auto text-base leading-relaxed">
-            A visual canvas meets production-grade execution. Design, test, and deploy AI workflows without writing a single line of infrastructure code.
+          <p className="text-[#6B7280] max-w-xl mx-auto text-base leading-relaxed">
+            Configure triggers, models, logic trees, and integrations visually. Export to executable server-less configs with one click.
           </p>
         </div>
 
-        <div ref={canvasRef} className={`reveal ${canvasVisible ? 'visible' : ''} grid grid-cols-1 lg:grid-cols-5 gap-6 items-start`}>
-          {/* Canvas */}
-          <div className="lg:col-span-3 relative">
-            <div className="card-glow rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
+          {/* Visual Canvas Panel */}
+          <div ref={canvasRef} className={`lg:col-span-3 reveal ${canvasVisible ? 'visible' : ''}`}>
+            <div className="card-glow h-[320px] relative overflow-hidden flex flex-col justify-between">
+              {/* Grid Background */}
+              <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
+
               {/* Canvas header */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-[#1E1E24] bg-[#0D0D10]">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
-                </div>
-                <span className="font-mono text-[10px] text-[#6B7280]">workflow_v3.Venta AI Labs</span>
+              <div className="px-5 py-3 border-b border-[#1E1E24] bg-[#0D0D10]/80 backdrop-blur-sm flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-1.5">
-                  <Zap size={12} className="text-[#00FF88]" />
-                  <span className="font-mono text-[10px] text-[#00FF88]">LIVE</span>
+                  <div className="w-2 h-2 rounded-full bg-[#EF4444]" />
+                  <div className="w-2 h-2 rounded-full bg-[#F59E0B]" />
+                  <div className="w-2 h-2 rounded-full bg-[#10B981]" />
+                  <span className="font-mono text-[10px] text-[#6B7280] ml-2">Workflow Designer // Main_Pipeline.vta</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[10px] text-[#00FF88] bg-[#00FF88]/10 px-2 py-0.5 rounded">ACTIVE</span>
                 </div>
               </div>
 
-              {/* Canvas body */}
-              <div className="relative bg-[#0A0A0B] grid-bg" style={{ height: '280px' }}>
-                {/* Connection lines SVG */}
-                <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
-                  {/* email -> if */}
-                  <line x1="17%" y1="50%" x2="28%" y2="50%" stroke="#1E1E24" strokeWidth="1.5" strokeDasharray="4,3" />
-                  {/* if -> agent */}
-                  <line x1="40%" y1="50%" x2="51%" y2="50%" stroke="#1E1E24" strokeWidth="1.5" strokeDasharray="4,3" />
-                  {/* agent -> email2 */}
-                  <line x1="63%" y1="45%" x2="74%" y2="27%" stroke="#1E1E24" strokeWidth="1.5" strokeDasharray="4,3" />
-                  {/* agent -> tg */}
-                  <line x1="63%" y1="55%" x2="74%" y2="68%" stroke="#1E1E24" strokeWidth="1.5" strokeDasharray="4,3" />
-
-                  {/* Active glow lines */}
-                  <line x1="17%" y1="50%" x2="28%" y2="50%" stroke="#00FF88" strokeWidth="1" opacity="0.4">
-                    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite" />
-                  </line>
-                  <line x1="40%" y1="50%" x2="51%" y2="50%" stroke="#00FF88" strokeWidth="1" opacity="0.4">
-                    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2.5s" repeatCount="indefinite" />
-                  </line>
+              {/* Node container space */}
+              <div className="flex-1 relative">
+                {/* SVG connection lines */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                  <line x1="20%" y1="50%" x2="35%" y2="50%" stroke="#1E1E24" strokeWidth="1.5" strokeDasharray="4" />
+                  <line x1="45%" y1="50%" x2="58%" y2="50%" stroke="#00FF88" strokeWidth="1.5" />
+                  <line x1="68%" y1="50%" x2="80%" y2="30%" stroke="#0EA5E9" strokeWidth="1.5" />
+                  <line x1="68%" y1="50%" x2="80%" y2="70%" stroke="#E01E5A" strokeWidth="1.5" />
                 </svg>
 
                 {nodes.map((n) => (
@@ -104,8 +91,8 @@ export default function ProductShowcase() {
             </div>
           </div>
 
-          {/* Features */}
-          <div className="lg:col-span-2 grid grid-cols-1 gap-4">
+          {/* Features - Attached to gridRef */}
+          <div ref={gridRef} className={`lg:col-span-2 grid grid-cols-1 gap-4 reveal ${gridVisible ? 'visible' : ''}`}>
             {features.map((f) => {
               const Icon = f.icon;
               return (

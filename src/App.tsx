@@ -19,18 +19,20 @@ export default function App() {
     <div className="min-h-screen bg-[#0A0A0B] text-[#F0F0F2]">
       <Navbar />
       <Hero />
+      {/* Services already has id="about" inside it */}
       <Services />
       <Statistics />
+      {/* CaseStudies already has id="projects" inside it */}
       <CaseStudies />
-      <ProductShowcase />
-      <Telemetry />
-      <Approach />
-      <FeatureTabs />
+      <ProductShowcase id="product" />
+      <Telemetry id="telemetry" />
+      <Approach id="approach" />
+      <FeatureTabs id="features" />
       <Integrations />
       <Testimonials />
-      <Articles />
-      <FAQ />
-      <Newsletter />
+      <Articles id="articles" />
+      <FAQ id="faq" />
+      <Newsletter id="contact" />
       <Footer />
     </div>
   );

@@ -6,7 +6,7 @@ export default {
       colors: {
         bg: '#0A0A0B',
         surface: '#111114',
-        border: '#1E1E24',
+        appBorder: '#1E1E24', // Renamed to prevent utility collisions
         accent: '#00FF88',
         'accent-blue': '#0EA5E9',
         muted: '#6B7280',
@@ -42,13 +42,6 @@ export default {
           '0%': { opacity: '0', transform: 'translateY(30px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-      },
-      backgroundImage: {
-        'grid-pattern': 'linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px)',
-        'radial-glow': 'radial-gradient(ellipse at center, rgba(0,255,136,0.08) 0%, transparent 70%)',
-      },
-      backgroundSize: {
-        'grid': '60px 60px',
       },
     },
   },

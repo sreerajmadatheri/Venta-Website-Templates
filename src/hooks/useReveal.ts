@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useReveal(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
+export function useReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
+  const ref = useRef<T>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -27,20 +27,28 @@ export function useReveal(threshold = 0.15) {
 
 export function useCountUp(target: number, duration = 2000, triggered = false) {
   const [count, setCount] = useState(0);
+  const progressRef = useRef(0);
 
   useEffect(() => {
     if (!triggered) return;
-    let start = 0;
+
+    progressRef.current = 0; // Reset progress when triggered
     const step = target / (duration / 16);
+
     const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
+      progressRef.current += step;
+      if (progressRef.current >= target) {
         setCount(target);
         clearInterval(timer);
       } else {
-        setCount(Math.round(start * 100) / 100);
+        const hasDecimals = target % 1 !== 0;
+        setCount(hasDecimals
+          ? Math.round(progressRef.current * 100) / 100
+          : Math.round(progressRef.current)
+        );
       }
     }, 16);
+
     return () => clearInterval(timer);
   }, [target, duration, triggered]);
 

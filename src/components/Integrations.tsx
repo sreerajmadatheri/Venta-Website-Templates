@@ -12,10 +12,10 @@ const integrations = [
 ];
 
 export default function Integrations() {
-  const { ref, visible } = useReveal();
+  const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
-    <section id="contact" className="relative py-28 px-6">
+    <section className="relative py-28 px-6"> {/* Removed conflicting ID */}
       <div className="max-w-7xl mx-auto text-center">
         <div ref={ref} className={`reveal ${visible ? 'visible' : ''} mb-14`}>
           <p className="section-label">INTEGRATIONS</p>
@@ -23,30 +23,29 @@ export default function Integrations() {
             Connects to everything
           </h2>
           <p className="text-[#6B7280] text-base max-w-lg mx-auto leading-relaxed">
-            Venta AI Labs bridges your data and tools — Slack, GitHub, Salesforce, Stripe and hundreds more. One platform, zero silos.
+            Our runtime syncs with your operational database, messaging channels, and API stacks without complex middleware or proxying layers.
           </p>
         </div>
 
-        {/* Orbit visualization */}
-        <div className="relative flex items-center justify-center" style={{ height: '340px' }}>
-          {/* Outer ring */}
-          <div className="absolute w-72 h-72 rounded-full border border-[#1E1E24] border-dashed animate-spin" style={{ animationDuration: '30s', animationDirection: 'reverse' }} />
-          {/* Middle ring */}
-          <div className="absolute w-48 h-48 rounded-full border border-[#00FF88]/10 animate-spin" style={{ animationDuration: '20s' }} />
-          {/* Inner ring */}
-          <div className="absolute w-28 h-28 rounded-full border border-[#00FF88]/20 animate-spin" style={{ animationDuration: '10s', animationDirection: 'reverse' }} />
-
-          {/* Center */}
-          <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#111114] border border-[#00FF88]/30 flex items-center justify-center">
-            <span className="font-mono text-[10px] text-[#00FF88] font-bold tracking-wider">ARM</span>
+        {/* Dynamic visual integration graphic */}
+        <div className="relative w-72 h-72 mx-auto mb-16 flex items-center justify-center">
+          {/* Central logo container */}
+          <div className="w-16 h-16 rounded-2xl bg-[#00FF88]/10 border-2 border-[#00FF88]/40 flex items-center justify-center z-20">
+            <div className="w-7 h-7 relative">
+              <div className="absolute inset-0 border border-[#00FF88] rounded-sm rotate-45 scale-75" />
+              <div className="absolute inset-0 border border-[#00FF88]/40 rounded-sm rotate-12" />
+            </div>
           </div>
 
-          {/* Orbiting icons */}
-          {integrations.map((int, i) => {
-            const angle = (i / integrations.length) * 2 * Math.PI;
-            const radius = i % 2 === 0 ? 136 : 96;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
+          {/* Orbits */}
+          <div className="absolute w-52 h-52 rounded-full border border-[#1E1E24]/60 animate-spin-slow" />
+          <div className="absolute w-72 h-72 rounded-full border border-[#1E1E24]/30" />
+
+          {/* Integration nodes */}
+          {integrations.slice(0, 4).map((int, i) => {
+            const angle = (i * 90 * Math.PI) / 180;
+            const x = Math.cos(angle) * 110;
+            const y = Math.sin(angle) * 110;
             return (
               <div
                 key={int.name}
@@ -72,9 +71,6 @@ export default function Integrations() {
               <span className="text-[#9CA3AF] text-xs font-medium">{int.name}</span>
             </div>
           ))}
-          <div className="card-glow px-4 py-2 rounded-full flex items-center gap-2">
-            <span className="text-[#6B7280] text-xs font-medium">+200 more</span>
-          </div>
         </div>
       </div>
     </section>

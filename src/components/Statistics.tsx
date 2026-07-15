@@ -70,9 +70,14 @@ export default function Statistics() {
             <StatCard value={99.99} suffix="%" label="Uptime for critical agent infrastructure" triggered={triggered} />
           </div>
 
-          {/* Video */}
+          {/* Video Card in Statistics.tsx */}
           <div className="flex-1">
-            <div className="relative rounded-xl overflow-hidden border border-[#1E1E24] group cursor-pointer card-glow">
+            <a
+              href="https://www.youtube.com/watch?your-real-video-id" // 👈 Replace this with your real video link
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block relative rounded-xl overflow-hidden border border-appBorder group cursor-pointer card-glow"
+            >
               <img
                 src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="Performance overview"
@@ -88,7 +93,7 @@ export default function Statistics() {
                 <span className="font-mono text-[10px] text-[#6B7280]">// PERFORMANCE_DEMO_2026</span>
                 <span className="font-mono text-[10px] text-[#00FF88]/60">▶ PLAY</span>
               </div>
-            </div>
+            </a>
             <p className="text-[#6B7280] text-xs mt-3 font-mono">
               Watch how Venta AI Labs agents process 10,000+ tasks/hour without degradation.
             </p>
