@@ -1,8 +1,21 @@
-const quickLinks = ['Home', 'Pricing', 'About', 'Projects', 'Articles'];
+const quickLinks = [
+  { name: 'Home', target: 'home' },
+  { name: 'Capabilities', target: 'product-showcase' },
+  { name: 'Projects', target: 'projects' },
+  { name: 'Articles', target: 'insights' }
+];
 const company = ['Careers', 'Blog', 'Press', 'Status', 'Security'];
 const policies = ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'GDPR'];
 
 export default function Footer() {
+  const handleScroll = (e: React.MouseEvent, targetId: string) => {
+    e.preventDefault();
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer className="border-t border-[#1E1E24] bg-[#0A0A0B]">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -20,8 +33,6 @@ export default function Footer() {
               Neural infrastructure for the enterprises building tomorrow. Deploy smarter, scale faster.
             </p>
             <div className="font-mono text-[11px] text-[#6B7280] space-y-1">
-              <p>// 400 Neural Boulevard, Suite 18</p>
-              <p>// San Francisco, CA 94107</p>
               <p>// contact@ventaailabs.com</p>
             </div>
           </div>
@@ -31,9 +42,13 @@ export default function Footer() {
             <h4 className="font-mono text-xs tracking-widest text-[#9CA3AF] uppercase mb-5">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link}>
-                  <a href={`#${link.toLowerCase()}`} className="text-[#6B7280] text-sm hover:text-[#F0F0F2] transition-colors">
-                    {link}
+                <li key={link.name}>
+                  <a
+                    href={`#${link.target}`}
+                    onClick={(e) => handleScroll(e, link.target)}
+                    className="text-[#6B7280] text-sm hover:text-[#F0F0F2] transition-colors"
+                  >
+                    {link.name}
                   </a>
                 </li>
               ))}

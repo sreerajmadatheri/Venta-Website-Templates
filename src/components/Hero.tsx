@@ -21,9 +21,9 @@ export default function Hero() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const target = document.getElementById(id);
+    const target = document.getElementById(id) || document.getElementById('newsletter');
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -36,7 +36,7 @@ export default function Hero() {
 
       <div className="max-w-4xl mx-auto px-6 text-center relative z-10 flex flex-col items-center gap-8">
         {/* Release Pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#1E1E24] bg-[#111114]/80 backdrop-blur-sm animate-fade-up">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-appBorder bg-[#111114]/80 backdrop-blur-sm animate-fade-up">
           <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88] animate-pulse" />
           <span className="font-mono text-[10px] tracking-wider text-[#9CA3AF] uppercase">
             Venta AI Labs v2.0 Platform Live
@@ -66,7 +66,7 @@ export default function Hero() {
             <ArrowRight size={16} />
           </button>
           <button
-            onClick={() => scrollToSection('about')}
+            onClick={() => scrollToSection('product-showcase')}
             className="btn-outline flex items-center gap-2 px-7 py-3 text-base cursor-pointer"
           >
             <Zap size={15} className="text-[#00FF88]" />
@@ -78,7 +78,7 @@ export default function Hero() {
         <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-[#6B7280] mt-4 animate-fade-up [animation-delay:800ms]">
           {['500+ Workflows Deployed', '99.99% Uptime', 'Fortune 500 Clients', 'SOC 2 Certified'].map((stat) => (
             <div key={stat} className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-[#00FF88]/60" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00FF88]/60" />
               <span className="font-mono text-xs">{stat}</span>
             </div>
           ))}
@@ -86,7 +86,7 @@ export default function Hero() {
       </div>
 
       {/* Marquee strip */}
-      <div className="absolute bottom-0 left-0 right-0 border-t border-[#1E1E24] bg-[#0A0A0B]/80 backdrop-blur-sm overflow-hidden py-3">
+      <div className="absolute bottom-0 left-0 right-0 border-t border-appBorder bg-[#0A0A0B]/80 backdrop-blur-sm overflow-hidden py-3">
         <div className="marquee-track">
           {marqueeItems.map((item, i) => (
             <div key={i} className="flex items-center gap-6 px-8 whitespace-nowrap">

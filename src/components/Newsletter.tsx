@@ -11,7 +11,6 @@ export default function Newsletter() {
     e.preventDefault();
     if (!email) return;
 
-    // Handle registration logic here
     setSubmitted(true);
     setEmail('');
   };
