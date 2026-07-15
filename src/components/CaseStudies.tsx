@@ -23,6 +23,13 @@ const cases = [
     tech: ['Mistral', 'Streaming', 'SIEM'],
     color: '#F59E0B',
   },
+  {
+    client: 'ERP System Updation',
+    industry: 'Enterprise IT',
+    result: 'Automation of office work and regular updation across corporate databases with zero human intervention.',
+    tech: ['API Sync', 'Data Pipeline', 'Workflows'],
+    color: '#A855F7', // Deep purple accent color for visual distinction
+  },
 ];
 
 export default function CaseStudies() {
@@ -36,19 +43,21 @@ export default function CaseStudies() {
           <div>
             <p className="section-label">CASE STUDIES</p>
             <h2 className="text-4xl md:text-5xl font-bold text-[#F0F0F2] tracking-tight">
-              Proven neural solutions
+              Real deployments,<br />
+              <span className="text-gradient">proven metrics</span>
             </h2>
           </div>
-          <button className="btn-outline flex items-center gap-2 self-start md:self-auto">
-            More Projects <ArrowRight size={14} />
-          </button>
+          <p className="text-[#6B7280] text-sm max-w-xs leading-relaxed">
+            We partner with teams looking to move past sandboxes and deploy actual utility.
+          </p>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* Updated grid layout to handle 4 items elegantly: grid-cols-1 md:grid-cols-2 lg:grid-cols-4 */}
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {cases.map((c, i) => (
             <div
               key={c.client}
-              className={`card-glow p-7 flex flex-col justify-between min-h-[280px] group cursor-pointer reveal reveal-delay-${i + 1} ${gridVisible ? 'visible' : ''}`}
+              className={`card-glow p-7 flex flex-col justify-between min-h-[300px] group cursor-pointer reveal reveal-delay-${i + 1} ${gridVisible ? 'visible' : ''}`}
             >
               <div>
                 <div className="flex items-start justify-between mb-6">
@@ -60,7 +69,7 @@ export default function CaseStudies() {
                     {c.industry.toUpperCase()}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-[#F0F0F2] mb-3">{c.client}</h3>
+                <h3 className="text-xl font-bold text-[#F0F0F2] mb-3 group-hover:text-[#00FF88] transition-colors duration-200">{c.client}</h3>
                 <p className="text-[#6B7280] text-sm leading-relaxed">{c.result}</p>
               </div>
               <div className="flex flex-wrap gap-2 mt-6">
