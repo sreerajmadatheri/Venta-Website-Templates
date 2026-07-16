@@ -1,18 +1,56 @@
-import React, { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Send, CheckCircle, Loader2 } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 export default function Newsletter() {
   const { ref, visible } = useReveal<HTMLDivElement>();
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Automatically reset the success message after 4 seconds
+  useEffect(() => {
+    if (submitted) {
+      const timer = setTimeout(() => {
+        setSubmitted(false);
+      }, 4000);
+
+      return () => clearTimeout(timer); // Clean up the timer if the component unmounts
+    }
+  }, [submitted]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
-    setSubmitted(true);
-    setEmail('');
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('https://formspree.io/f/xjgnggjw', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          message: `New access request submitted for contact@ventaailabs.com from user: ${email}`
+        })
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setEmail('');
+      } else {
+        throw new Error('Something went wrong. Please try again.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Submission failed. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,27 +72,44 @@ export default function Newsletter() {
               <CheckCircle size={32} className="text-[#00FF88]" />
               <h4 className="text-[#F0F0F2] font-semibold text-base">Request submitted successfully</h4>
               <p className="text-[#6B7280] text-xs leading-relaxed">
-                An systems engineer will reach out to your team within 12 business hours.
+                A systems engineer will reach out to your team within 12 business hours.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto flex gap-2 p-1.5 rounded-xl border border-appBorder bg-[#111114]/60 backdrop-blur-sm">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter corporate email address"
-                className="flex-1 bg-transparent px-3 py-2 text-sm text-[#F0F0F2] placeholder-[#6B7280] focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="btn-accent px-4 py-2 text-xs flex items-center gap-1.5 shrink-0 cursor-pointer"
-              >
-                <span>Request Access</span>
-                <Send size={12} />
-              </button>
-            </form>
+            <div className="max-w-md mx-auto">
+              <form onSubmit={handleSubmit} className="flex gap-2 p-1.5 rounded-xl border border-appBorder bg-[#111114]/60 backdrop-blur-sm">
+                <input
+                  type="email"
+                  required
+                  disabled={loading}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter corporate email address"
+                  className="flex-1 bg-transparent px-3 py-2 text-sm text-[#F0F0F2] placeholder-[#6B7280] focus:outline-none disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-accent px-4 py-2 text-xs flex items-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-50"
+                >
+                  {loading ? (
+                    <>
+                      <span>Sending...</span>
+                      <Loader2 size={12} className="animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      <span>Request Access</span>
+                      <Send size={12} />
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {error && (
+                <p className="text-red-500 text-xs mt-3 text-left px-2 font-mono">{error}</p>
+              )}
+            </div>
           )}
 
           <p className="text-[10px] font-mono text-[#6B7280] mt-4">
