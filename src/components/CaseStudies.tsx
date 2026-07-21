@@ -1,39 +1,79 @@
+import { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import WorkflowModal from './WorkflowModal';
+
+// Using the test json workflow file for testing layout pipeline
+import erpWorkflowData from './test-workflow.json';
 
 const cases = [
-  {
-    client: 'Vertex Labs',
-    industry: 'Healthcare Tech',
-    result: 'Deployed a custom LLM to automate provider relations, reducing ticket latency by 85%.',
-    tech: ['GPT-4', 'RAG', 'Webhook'],
-    color: '#00FF88',
-  },
-  {
-    client: 'Meridian Capital',
-    industry: 'Financial Services',
-    result: 'Built an autonomous compliance agent that processes 40,000 documents/day with 99.3% accuracy.',
-    tech: ['Claude 3', 'Vector DB', 'Audit Trail'],
-    color: '#0EA5E9',
-  },
-  {
-    client: 'Phantom Systems',
-    industry: 'Cybersecurity',
-    result: 'Architected an AI threat-detection pipeline that reduced mean detection time from 4h to 12 minutes.',
-    tech: ['Mistral', 'Streaming', 'SIEM'],
-    color: '#F59E0B',
-  },
   {
     client: 'ERP System Updation',
     industry: 'Enterprise IT',
     result: 'Automation of office work and regular updation across corporate databases with zero human intervention.',
     tech: ['API Sync', 'Data Pipeline', 'Workflows'],
     color: '#A855F7',
+    workflow: erpWorkflowData
+  },
+  {
+    client: 'Apex Analytics',
+    industry: 'Financial Services',
+    result: 'Deployed an automated reconciliation engine that matches cross-border multi-currency transactions, cutting end-of-month processing from days to minutes.',
+    tech: ['Ledger Sync', 'Risk Vector', 'Automated Audit'],
+    color: '#0EA5E9',
+    workflow: {
+      meta: { instanceId: "venta_fin_reconcile_02" },
+      nodes: [{ parameters: {}, id: "cron-02", name: "Interval Ledger Pull", type: "n8n-nodes-base.cron", typeVersion: 1 }],
+      connections: {}
+    }
+  },
+  {
+    client: 'Vanguard Media Labs',
+    industry: 'AI Marketing',
+    result: 'Architected a multi-channel content generation and digital marketing engine that dynamically localizes ad copies, scaling campaign throughput by 300%.',
+    tech: ['LLM Copy', 'Trend Ingest', 'Ad Analytics'],
+    color: '#00FF88',
+    workflow: {
+      meta: { instanceId: "venta_mkt_generation_03" },
+      nodes: [{ parameters: {}, id: "rss-03", name: "Trend Engine Aggregator", type: "n8n-nodes-base.rssFeed", typeVersion: 1 }],
+      connections: {}
+    }
+  },
+  {
+    client: 'Stratis Corp',
+    industry: 'Business Consultancy',
+    result: 'Helping organizations use technology to solve business problems, achieve their goals, and create new value through optimized autonomous operating structures.',
+    tech: ['IT Consultancy', 'Process Audit', 'ROI Modeling'],
+    color: '#F59E0B',
+    workflow: {
+      meta: { instanceId: "venta_biz_consult_04" },
+      nodes: [{ parameters: {}, id: "manual-04", name: "Process Audit Trigger", type: "n8n-nodes-base.manualTrigger", typeVersion: 1 }],
+      connections: {}
+    }
   },
 ];
 
 export default function CaseStudies() {
   const { ref: headingRef, visible: headingVisible } = useReveal();
   const { ref: gridRef, visible: gridVisible } = useReveal();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [activeWorkflow, setActiveWorkflow] = useState<any | null>(null);
+  const [activeProject, setActiveProject] = useState<string>('');
+
+  const handleCardClick = (projectName: string, workflowPayload: any) => {
+    setActiveProject(projectName);
+    setActiveWorkflow(workflowPayload);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Timeout keeps data intact until modal close animations finish cleanly
+    setTimeout(() => {
+      setActiveWorkflow(null);
+      setActiveProject('');
+    }, 400);
+  };
 
   return (
     <section id="projects" className="relative py-28 px-6">
@@ -47,7 +87,7 @@ export default function CaseStudies() {
             </h2>
           </div>
           <p className="text-[#6B7280] text-sm max-w-xs leading-relaxed">
-            We partner with teams looking to move past sandboxes and deploy actual utility.
+            We partner with teams looking to move past sandboxes and deploy actual utility. Click any card to inspect its integration blueprint.
           </p>
         </div>
 
@@ -55,7 +95,8 @@ export default function CaseStudies() {
           {cases.map((c, i) => (
             <div
               key={c.client}
-              className={`card-glow p-7 flex flex-col justify-between min-h-[300px] group cursor-pointer reveal reveal-delay-${i + 1} ${gridVisible ? 'visible' : ''}`}
+              onClick={() => handleCardClick(c.client, c.workflow)}
+              className={`card-glow p-7 flex flex-col justify-between min-h-[300px] group cursor-pointer reveal reveal-delay-${i + 1} ${gridVisible ? 'visible' : ''} hover:border-[#00FF88]/30 transition-all duration-300`}
             >
               <div>
                 <div className="flex items-start justify-between mb-6">
@@ -70,17 +111,30 @@ export default function CaseStudies() {
                 <h3 className="text-xl font-bold text-[#F0F0F2] mb-3 group-hover:text-[#00FF88] transition-colors duration-200">{c.client}</h3>
                 <p className="text-[#6B7280] text-sm leading-relaxed">{c.result}</p>
               </div>
-              <div className="flex flex-wrap gap-2 mt-6">
-                {c.tech.map((t) => (
-                  <span key={t} className="font-mono text-[10px] text-[#9CA3AF] bg-[#1A1A20] border border-[#1E1E24] px-2 py-0.5 rounded">
-                    {t}
-                  </span>
-                ))}
+
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-[#1E1E24]/60">
+                <div className="flex flex-wrap gap-1.5">
+                  {c.tech.slice(0, 2).map((t) => (
+                    <span key={t} className="font-mono text-[9px] text-[#9CA3AF] bg-[#1A1A20] border border-[#1E1E24] px-2 py-0.5 rounded">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <span className="text-[10px] font-mono text-[#6B7280] group-hover:text-[#00FF88] transition-colors flex items-center gap-1">
+                  Blueprint &rarr;
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <WorkflowModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        projectName={activeProject}
+        workflowData={activeWorkflow}
+      />
     </section>
   );
 }
