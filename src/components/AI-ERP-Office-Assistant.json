@@ -1,0 +1,512 @@
+{
+  "name": "AI ERP Office Assistant (sample)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🤖 AI ERP Office Assistant — sample\n\nChat with an AI agent that does real office work in your ERP (ERPNext): customer / item / stock lookups, receivables, draft invoices, leave applications and email.\n\n### Setup (~10 min)\n**1. Model** — open *Claude (Anthropic)* and select your Anthropic API credential (or swap in any other chat-model node).\n\n**2. ERP URL** — replace `your-company.erpnext.com` with your ERPNext address in all 7 HTTP tools.\n\n**3. ERP auth** — create one **Header Auth** credential and select it in every HTTP tool:\n• Name: `Authorization`\n• Value: `token <api_key>:<api_secret>`\n(Generate the key pair in ERPNext under **User → Settings → API Access**.)\n\n**4. Email** — connect a Gmail account in *send_email* (or replace it with SMTP / Outlook).\n\nThen open **Chat** below the canvas and try the example prompts →\n\n### Not on ERPNext?\nPoint the HTTP tools at your ERP's own REST API instead (Odoo JSON-RPC, Dolibarr, Zoho Books, SAP B1 Service Layer…). Only the URLs, auth and field names change — the agent pattern stays the same.\n\n### Different trigger?\nSwap the Chat Trigger for a Gmail / Slack / Telegram / WhatsApp trigger so employees can message the assistant where they already work.",
+        "height": 920,
+        "width": 480
+      },
+      "id": "58f0cfc6-ef9e-40c0-8883-02ef5a97a3b6",
+      "name": "Setup guide",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 💬 Try asking\n\n• \"Which customers do we have in the Retail group?\"\n• \"How much stock of SKU-0001 is left, per warehouse?\"\n• \"List all overdue invoices and total the outstanding amount.\"\n• \"Create an invoice for Acme Corp: 5 × SKU-0001 at 1200 each, due end of next month.\"\n• \"File casual leave for Priya from the 3rd to the 5th of next month.\"\n• \"Email an overdue-payment reminder for ACC-SINV-2026-00042 to billing@acme.com.\"\n\n⚠️ Safe by design: invoices and leave are created as **Draft / Open**, and the agent asks for confirmation before every write or email.",
+        "height": 440,
+        "width": 460,
+        "color": 4
+      },
+      "id": "1cec3058-140b-4db3-b6c1-195505abea90",
+      "name": "Example prompts",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 🔎 Read-only ERP tools\nLookups against the ERPNext REST API — `GET /api/resource/<Doctype>` with `fields` and `filters` query params.",
+        "height": 300,
+        "width": 800,
+        "color": 7
+      },
+      "id": "8f5e9adc-ca67-4e57-a878-74661bf9377e",
+      "name": "Read tools note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### ✍️ Write & comms tools\nDocuments are created as Drafts via `POST /api/resource/<Doctype>` — a human still reviews and submits them in the ERP. Email goes out via Gmail.",
+        "height": 300,
+        "width": 800,
+        "color": 3
+      },
+      "id": "487d4c27-11c9-4ba0-a074-70247b4cd73f",
+      "name": "Write tools note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "59c6324d-4f13-4295-b4d0-0c6f29934b85",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        320
+      ],
+      "webhookId": "9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are Ava, the AI office assistant for a small enterprise that runs its business on ERPNext. Today is {{ $now.format('yyyy-MM-dd') }}.\n\nYou take care of everyday office work using your tools:\n- Look up customers, items and employees\n- Check live warehouse stock\n- List sales invoices and summarise receivables\n- Create DRAFT sales invoices\n- File leave applications\n- Send emails on request\n\nGround rules:\n1. Facts come from tools. Never invent customers, item codes, stock figures or amounts. Always resolve human names to exact IDs (search_customers, search_items, list_employees) before any write action.\n2. Before every write action (create_sales_invoice, create_leave_application, send_email), show a short summary of exactly what you are about to do and wait for the user's explicit confirmation.\n3. ERPNext conventions: dates are YYYY-MM-DD; the \"filters\" query parameter is a JSON array like [[\"field\",\"=\",\"value\"]]; use document IDs exactly as the API returned them.\n4. Documents you create are Draft (invoices) or Open (leave applications) — remind the user that a person still reviews and submits them in ERPNext.\n5. If a lookup returns nothing, say so and suggest the closest likely match.\n6. Keep replies brief and business-like; use a compact markdown table when listing more than three records.\n7. Anything outside your tools (payments, payroll, deletions, master-data changes) must be done manually in ERPNext — say so politely."
+        }
+      },
+      "id": "acccaea2-e252-471a-8b63-105f54dd99e1",
+      "name": "ERP Office Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        512,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "model": "claude-sonnet-4-6",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "id": "ae34a07e-104b-4748-997c-e05f689c8116",
+      "name": "Claude (Anthropic)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 12
+      },
+      "id": "1ab1ca7b-d212-4eec-b306-7b047603f87a",
+      "name": "Conversation Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search customers (ERPNext Customer doctype). Returns name (the customer ID), customer_name, customer_group and territory. To narrow results, pass the optional 'filters' query parameter as a JSON array, e.g. [[\"customer_name\",\"like\",\"%acme%\"]] or [[\"customer_group\",\"=\",\"Retail\"]]. Call without filters to list the first 20 customers.",
+        "url": "https://your-company.erpnext.com/api/resource/Customer",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "fields",
+              "valueProvider": "fieldValue",
+              "value": "[\"name\",\"customer_name\",\"customer_group\",\"territory\"]"
+            },
+            {
+              "name": "limit_page_length",
+              "valueProvider": "fieldValue",
+              "value": "20"
+            },
+            {
+              "name": "filters",
+              "valueProvider": "modelOptional"
+            }
+          ]
+        }
+      },
+      "id": "65bc5951-644f-4f13-8456-25aa9b269c49",
+      "name": "search_customers",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        752,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search products / items (ERPNext Item doctype). Returns name (the item code), item_name, item_group, stock_uom and standard_rate. Optional 'filters' query parameter as a JSON array, e.g. [[\"item_name\",\"like\",\"%chair%\"]]. Use this to resolve exact item codes before creating an invoice.",
+        "url": "https://your-company.erpnext.com/api/resource/Item",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "fields",
+              "valueProvider": "fieldValue",
+              "value": "[\"name\",\"item_name\",\"item_group\",\"stock_uom\",\"standard_rate\"]"
+            },
+            {
+              "name": "limit_page_length",
+              "valueProvider": "fieldValue",
+              "value": "20"
+            },
+            {
+              "name": "filters",
+              "valueProvider": "modelOptional"
+            }
+          ]
+        }
+      },
+      "id": "43f8df36-dc6c-47d1-bea0-e6a34b279134",
+      "name": "search_items",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Check live warehouse stock (ERPNext Bin doctype). Returns item_code, warehouse and actual_qty. The 'filters' query parameter is REQUIRED and must be a JSON array, e.g. [[\"item_code\",\"=\",\"SKU-0001\"]] to see one item across all warehouses, or [[\"warehouse\",\"=\",\"Stores - ACM\"]] for everything in one warehouse.",
+        "url": "https://your-company.erpnext.com/api/resource/Bin",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "fields",
+              "valueProvider": "fieldValue",
+              "value": "[\"item_code\",\"warehouse\",\"actual_qty\"]"
+            },
+            {
+              "name": "limit_page_length",
+              "valueProvider": "fieldValue",
+              "value": "50"
+            },
+            {
+              "name": "filters"
+            }
+          ]
+        }
+      },
+      "id": "3e7902b5-841f-4b0e-85ed-7da394471ff6",
+      "name": "check_stock",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "List sales invoices (ERPNext Sales Invoice doctype). Returns name (invoice ID), customer, posting_date, due_date, status, grand_total, outstanding_amount and currency. Optional 'filters' query parameter as a JSON array — unpaid/overdue only: [[\"status\",\"in\",[\"Unpaid\",\"Overdue\"]]]; one customer: [[\"customer\",\"=\",\"CUST-00001\"]]. Statuses include Draft, Unpaid, Overdue, Paid, Cancelled.",
+        "url": "https://your-company.erpnext.com/api/resource/Sales%20Invoice",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "fields",
+              "valueProvider": "fieldValue",
+              "value": "[\"name\",\"customer\",\"posting_date\",\"due_date\",\"status\",\"grand_total\",\"outstanding_amount\",\"currency\"]"
+            },
+            {
+              "name": "limit_page_length",
+              "valueProvider": "fieldValue",
+              "value": "50"
+            },
+            {
+              "name": "filters",
+              "valueProvider": "modelOptional"
+            }
+          ]
+        }
+      },
+      "id": "448ece16-3407-42a2-8434-a31f1e8fb5ba",
+      "name": "list_sales_invoices",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Look up employees (ERPNext Employee doctype) — use this to resolve the employee ID before filing a leave application. Returns name (employee ID like HR-EMP-00001), employee_name, department, designation and status. Optional 'filters' query parameter as a JSON array, e.g. [[\"employee_name\",\"like\",\"%priya%\"]].",
+        "url": "https://your-company.erpnext.com/api/resource/Employee",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "parametersQuery": {
+          "values": [
+            {
+              "name": "fields",
+              "valueProvider": "fieldValue",
+              "value": "[\"name\",\"employee_name\",\"department\",\"designation\",\"status\"]"
+            },
+            {
+              "name": "limit_page_length",
+              "valueProvider": "fieldValue",
+              "value": "20"
+            },
+            {
+              "name": "filters",
+              "valueProvider": "modelOptional"
+            }
+          ]
+        }
+      },
+      "id": "f722a3ce-263a-4a5f-afae-863fb13b5696",
+      "name": "list_employees",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        752,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Create a new DRAFT sales invoice in the ERP. First resolve the exact customer ID (search_customers) and item codes (search_items), confirm the details with the user, then call this tool. The invoice is saved as a Draft for human review — it is not submitted or emailed automatically. Returns the created document including its new invoice ID.",
+        "method": "POST",
+        "url": "https://your-company.erpnext.com/api/resource/Sales%20Invoice",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{invoice}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "invoice",
+              "description": "The Sales Invoice as a JSON object: {\"customer\": \"<customer ID from search_customers>\", \"due_date\": \"YYYY-MM-DD\", \"items\": [{\"item_code\": \"<item code from search_items>\", \"qty\": <number>, \"rate\": <unit price as number>}]}",
+              "type": "json"
+            }
+          ]
+        }
+      },
+      "id": "6a80ce3c-1a7c-402f-9223-3d59687e9530",
+      "name": "create_sales_invoice",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "File a leave application for an employee (created with status Open, pending HR approval). First resolve the employee ID with list_employees and confirm the dates and leave type with the user, then call this tool. Returns the created leave application document.",
+        "method": "POST",
+        "url": "https://your-company.erpnext.com/api/resource/Leave%20Application",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{leave}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "leave",
+              "description": "The Leave Application as a JSON object: {\"employee\": \"<employee ID from list_employees>\", \"leave_type\": \"<e.g. Casual Leave, Sick Leave, Privilege Leave>\", \"from_date\": \"YYYY-MM-DD\", \"to_date\": \"YYYY-MM-DD\", \"status\": \"Open\"}",
+              "type": "json"
+            }
+          ]
+        }
+      },
+      "id": "eca219b8-ed7f-4e27-9918-45bec8ba464b",
+      "name": "create_leave_application",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $fromAI('To', 'Recipient email address', 'string') }}",
+        "subject": "={{ $fromAI('Subject', 'Short, specific subject line', 'string') }}",
+        "emailType": "text",
+        "message": "={{ $fromAI('Message', 'The full email body as plain text — professional, concise, signed off as the company office assistant', 'string') }}",
+        "options": {}
+      },
+      "id": "e8b708d3-157a-44de-aa42-9419760132f9",
+      "name": "send_email",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        1296,
+        960
+      ],
+      "webhookId": "90da00a2-9cda-43c9-a838-4f65f46d8437"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude (Anthropic)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_customers": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_items": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check_stock": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "list_sales_invoices": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "list_employees": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_sales_invoice": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_leave_application": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_email": {
+      "ai_tool": [
+        [
+          {
+            "node": "ERP Office Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "200efd95-3fb5-47b2-9bf6-e09cca360447",
+  "meta": {
+    "instanceId": "8798b484812bfcde13e7ae136d86779f6cd6aa324735b81cdc024e1666f81f37"
+  },
+  "nodeGroups": [],
+  "id": "OnwnPfEiIqZElofN",
+  "tags": []
+}

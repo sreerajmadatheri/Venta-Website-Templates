@@ -1,0 +1,51 @@
+{
+  "name": "Test Connection Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "test-webhook",
+        "options": {}
+      },
+      "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "System operational"
+            },
+            {
+              "name": "message",
+              "value": "Hello from n8n!"
+            }
+          ]
+        }
+      },
+      "id": "e5f6a1b2-c3d4-9c0d-7a8b-3a4b5c6d1e2f",
+      "name": "Set Test Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [470, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Test Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}
