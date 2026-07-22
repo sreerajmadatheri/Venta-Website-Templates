@@ -1,0 +1,69 @@
+{
+  "nodes": [
+    {
+      "id": "hub_stratis_corp",
+      "name": "Strategy Analysis Hub",
+      "type": "n8n-nodes-base.agentHub",
+      "subtitle": "consulting & resource engine",
+      "position": [360, 205],
+      "isCenter": true
+    },
+    {
+      "id": "node_rfp_ingest",
+      "name": "RFP & Contract Ingest",
+      "subtitle": "DOCUSIGN · EMAIL ATTACHMENTS",
+      "position": [24, 40],
+      "target": "hub_stratis_corp"
+    },
+    {
+      "id": "node_client_data",
+      "name": "Client ERP Telemetry",
+      "subtitle": "SAP · ORACLE · SNOWFLAKE",
+      "position": [24, 150],
+      "target": "hub_stratis_corp"
+    },
+    {
+      "id": "node_market_benchmarks",
+      "name": "Industry Benchmarks",
+      "subtitle": "GARTNER · FORRESTER DATA",
+      "position": [24, 260],
+      "target": "hub_stratis_corp"
+    },
+    {
+      "id": "node_team_availability",
+      "name": "Consultant Roster API",
+      "subtitle": "WORKDAY · TIME TRACKING",
+      "position": [24, 370],
+      "target": "hub_stratis_corp"
+    },
+    {
+      "id": "node_proposal_builder",
+      "name": "AI Proposal Generator",
+      "subtitle": "PITCH DECKS · SCOPE OF WORK",
+      "position": [700, 40],
+      "source": "hub_stratis_corp"
+    },
+    {
+      "id": "node_resource_allocator",
+      "name": "Resource Allocation Agent",
+      "subtitle": "ASANA · JIRA ASSIGNMENTS",
+      "position": [700, 150],
+      "source": "hub_stratis_corp"
+    },
+    {
+      "id": "node_financial_model",
+      "name": "ROI & Modeling Engine",
+      "subtitle": "EXCEL API · FORECASTING",
+      "position": [700, 260],
+      "source": "hub_stratis_corp"
+    },
+    {
+      "id": "node_exec_briefing",
+      "name": "C-Suite Executive Briefs",
+      "subtitle": "SLACK · NOTION DASHBOARDS",
+      "position": [700, 370],
+      "source": "hub_stratis_corp"
+    }
+  ],
+  "executionTicker": "▸ executing: rfp_parsed → gap_analysis → resource_match → roi_modeling → exec_briefing_delivery"
+}

@@ -1,0 +1,69 @@
+{
+  "nodes": [
+    {
+      "id": "hub_apex_analytics",
+      "name": "Financial Analytics Hub",
+      "type": "n8n-nodes-base.agentHub",
+      "subtitle": "risk engine · alpha generation",
+      "position": [360, 205],
+      "isCenter": true
+    },
+    {
+      "id": "node_market_feeds",
+      "name": "Market Data Feeds",
+      "subtitle": "BLOOMBERG · REUTERS API",
+      "position": [24, 40],
+      "target": "hub_apex_analytics"
+    },
+    {
+      "id": "node_tx_ingest",
+      "name": "Transaction Stream",
+      "subtitle": "SWIFT · BANKING WEBHOOKS",
+      "position": [24, 150],
+      "target": "hub_apex_analytics"
+    },
+    {
+      "id": "node_sec_filings",
+      "name": "SEC & Regulatory Docs",
+      "subtitle": "EDGAR · PDF OCR · FILINGS",
+      "position": [24, 260],
+      "target": "hub_apex_analytics"
+    },
+    {
+      "id": "node_client_inquiries",
+      "name": "Investor Portal Ingest",
+      "subtitle": "WEALTH PORTAL · CRM",
+      "position": [24, 370],
+      "target": "hub_apex_analytics"
+    },
+    {
+      "id": "node_risk_scoring",
+      "name": "Risk & Fraud Scoring",
+      "subtitle": "AML · COMPLIANCE ENGINE",
+      "position": [700, 40],
+      "source": "hub_apex_analytics"
+    },
+    {
+      "id": "node_portfolio_rebalance",
+      "name": "Portfolio Rebalancer",
+      "subtitle": "ALGO EXECUTION · TRADING",
+      "position": [700, 150],
+      "source": "hub_apex_analytics"
+    },
+    {
+      "id": "node_tax_reporting",
+      "name": "Tax & Audit Ledger",
+      "subtitle": "GENERAL LEDGER · AUDIT TRAIL",
+      "position": [700, 260],
+      "source": "hub_apex_analytics"
+    },
+    {
+      "id": "node_investor_reports",
+      "name": "Client Report Generator",
+      "subtitle": "PDF PERFORMANCE REPORTS",
+      "position": [700, 370],
+      "source": "hub_apex_analytics"
+    }
+  ],
+  "executionTicker": "▸ executing: market_feed_sync → aml_fraud_check → portfolio_risk_eval → ledger_update → client_report_gen"
+}

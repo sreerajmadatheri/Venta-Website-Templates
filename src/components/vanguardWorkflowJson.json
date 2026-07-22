@@ -1,0 +1,69 @@
+{
+  "nodes": [
+    {
+      "id": "hub_vanguard_media",
+      "name": "Campaign Control Engine",
+      "type": "n8n-nodes-base.agentHub",
+      "subtitle": "multi-channel ad & content hub",
+      "position": [360, 205],
+      "isCenter": true
+    },
+    {
+      "id": "node_ad_telemetry",
+      "name": "Ad Performance Metrics",
+      "subtitle": "META ADS · GOOGLE ADS",
+      "position": [24, 40],
+      "target": "hub_vanguard_media"
+    },
+    {
+      "id": "node_content_briefs",
+      "name": "Campaign Strategy Ingest",
+      "subtitle": "NOTION · AIRTABLE BRIEFS",
+      "position": [24, 150],
+      "target": "hub_vanguard_media"
+    },
+    {
+      "id": "node_audience_signals",
+      "name": "Audience Sentiment",
+      "subtitle": "SOCIAL LISTENING · GA4",
+      "position": [24, 260],
+      "target": "hub_vanguard_media"
+    },
+    {
+      "id": "node_lead_capture",
+      "name": "Inbound Lead Webhooks",
+      "subtitle": "HUBSPOT · TYPEFORM",
+      "position": [24, 370],
+      "target": "hub_vanguard_media"
+    },
+    {
+      "id": "node_ai_copywriter",
+      "name": "AI Content & Copy Synth",
+      "subtitle": "GPT-4o · CLAUDE CREATIVE",
+      "position": [700, 40],
+      "source": "hub_vanguard_media"
+    },
+    {
+      "id": "node_media_generator",
+      "name": "Creative Asset Engine",
+      "subtitle": "MIDJOURNEY · RUNWAY STT",
+      "position": [700, 150],
+      "source": "hub_vanguard_media"
+    },
+    {
+      "id": "node_social_publisher",
+      "name": "Omnichannel Auto-Publisher",
+      "subtitle": "LINKEDIN · X · INSTAGRAM",
+      "position": [700, 260],
+      "source": "hub_vanguard_media"
+    },
+    {
+      "id": "node_bid_optimizer",
+      "name": "ROAS & Budget Optimizer",
+      "subtitle": "AUTO-BID ADJUSTMENT",
+      "position": [700, 370],
+      "source": "hub_vanguard_media"
+    }
+  ],
+  "executionTicker": "▸ executing: telemetry_ingest → sentiment_analysis → asset_generation → auto_publish → roas_bid_adjust"
+}
