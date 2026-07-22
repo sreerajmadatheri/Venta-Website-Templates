@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "hub_ai_agents",
+      "name": "Central ERP Orchestrator",
+      "type": "n8n-nodes-base.agentHub",
+      "subtitle": "n8n master orchestration",
+      "position": [340, 260],
+      "isCenter": true
+    },
+    {
+      "id": "node_docs",
+      "name": "Docs Agent",
+      "subtitle": "OCR · Files",
+      "position": [24, 40],
+      "target": "hub_ai_agents"
+    },
+    {
+      "id": "node_sales",
+      "name": "Sales Agent",
+      "subtitle": "CRM · Quotes",
+      "position": [24, 150],
+      "target": "hub_ai_agents"
+    },
+    {
+      "id": "node_hr",
+      "name": "HR Agent",
+      "subtitle": "Payroll · Leave",
+      "position": [24, 260],
+      "target": "hub_ai_agents"
+    },
+    {
+      "id": "node_finance",
+      "name": "Finance Agent",
+      "subtitle": "GL · AP · AR",
+      "position": [660, 40],
+      "source": "hub_ai_agents"
+    },
+    {
+      "id": "node_ops",
+      "name": "Ops Agent",
+      "subtitle": "Inventory · PO",
+      "position": [660, 150],
+      "source": "hub_ai_agents"
+    },
+    {
+      "id": "node_reports",
+      "name": "Reports Agent",
+      "subtitle": "KPI · Alerts",
+      "position": [660, 260],
+      "source": "hub_ai_agents"
+    },
+    {
+      "id": "node_support_inbound",
+      "name": "Support Triage Agent",
+      "subtitle": "Email · Chat · Tickets",
+      "position": [24, 370],
+      "target": "hub_ai_agents"
+    },
+    {
+      "id": "node_support_outbound",
+      "name": "CSAT & Escalation Agent",
+      "subtitle": "Resolutions · Feedback",
+      "position": [660, 370],
+      "source": "hub_ai_agents"
+    },
+    {
+      "id": "node_etl_ingest",
+      "name": "Stream ETL Agent",
+      "subtitle": "CDC · Webhooks · Files",
+      "position": [24, 480],
+      "target": "hub_ai_agents"
+    },
+    {
+      "id": "node_data_warehouse",
+      "name": "Data Warehouse Agent",
+      "subtitle": "Snowflake · BigQuery",
+      "position": [660, 480],
+      "source": "hub_ai_agents"
+    },
+    {
+      "id": "node_knowledge_rag",
+      "name": "RAG Knowledge Agent",
+      "subtitle": "Vector Index · LLM Rerank",
+      "position": [24, 590],
+      "target": "hub_ai_agents"
+    },
+    {
+      "id": "node_code_exec",
+      "name": "Code Execution Agent",
+      "subtitle": "Python · Script Runtime",
+      "position": [660, 590],
+      "source": "hub_ai_agents"
+    }
+  ],
+  "executionTicker": "▸ executing: real-time ERP sync → triage customer ticket → pipeline ETL ingest → vector RAG synthesis"
+}

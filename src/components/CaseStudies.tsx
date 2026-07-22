@@ -3,7 +3,10 @@ import { useReveal } from '../hooks/useReveal';
 import WorkflowModal from './WorkflowModal';
 
 // Using the test json workflow file for testing layout pipeline
-import erpWorkflowData from './test-workflow.json';
+import erpWorkflowData from './erpWorkflowJson.json';
+import apexWorkflowJson from './apexWorkflowJson.json';
+import vanguardWorkflowJson from './vanguardWorkflowJson.json';
+import stratisWorkflowJson from './stratisWorkflowJson.json';
 
 const cases = [
   {
@@ -20,11 +23,12 @@ const cases = [
     result: 'Deployed an automated reconciliation engine that matches cross-border multi-currency transactions, cutting end-of-month processing from days to minutes.',
     tech: ['Ledger Sync', 'Risk Vector', 'Automated Audit'],
     color: '#0EA5E9',
-    workflow: {
+    workflow: apexWorkflowJson
+    /*workflow: {
       meta: { instanceId: "venta_fin_reconcile_02" },
       nodes: [{ parameters: {}, id: "cron-02", name: "Interval Ledger Pull", type: "n8n-nodes-base.cron", typeVersion: 1 }],
       connections: {}
-    }
+    }*/
   },
   {
     client: 'Vanguard Media Labs',
@@ -32,11 +36,12 @@ const cases = [
     result: 'Architected a multi-channel content generation and digital marketing engine that dynamically localizes ad copies, scaling campaign throughput by 300%.',
     tech: ['LLM Copy', 'Trend Ingest', 'Ad Analytics'],
     color: '#00FF88',
-    workflow: {
+    workflow: vanguardWorkflowJson
+    /*workflow: {
       meta: { instanceId: "venta_mkt_generation_03" },
       nodes: [{ parameters: {}, id: "rss-03", name: "Trend Engine Aggregator", type: "n8n-nodes-base.rssFeed", typeVersion: 1 }],
       connections: {}
-    }
+    }*/
   },
   {
     client: 'Stratis Corp',
@@ -44,11 +49,12 @@ const cases = [
     result: 'Helping organizations use technology to solve business problems, achieve their goals, and create new value through optimized autonomous operating structures.',
     tech: ['IT Consultancy', 'Process Audit', 'ROI Modeling'],
     color: '#F59E0B',
-    workflow: {
+    workflow: stratisWorkflowJson
+    /*workflow: {
       meta: { instanceId: "venta_biz_consult_04" },
       nodes: [{ parameters: {}, id: "manual-04", name: "Process Audit Trigger", type: "n8n-nodes-base.manualTrigger", typeVersion: 1 }],
       connections: {}
-    }
+    }*/
   },
 ];
 
