@@ -13,7 +13,7 @@ const articles = [
     excerpt: "Prototypes impress. Production destroys. We analyzed 50 failed AI deployments to find the common thread — and it's not the model.",
     tag: 'ENGINEERING',
     img: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600',
-    url: 'https://a16z.com/emerging-architectures-for-llm-applications/',
+    url: 'https://venta.hashnode.dev/emerging-architectures-for-llm-applications',
   },
   {
     date: 'Jun 15, 2026',
@@ -22,7 +22,7 @@ const articles = [
     excerpt: 'Both approaches adapt LLMs to your domain. The right choice depends on your data volatility, latency requirements, and budget.',
     tag: 'STRATEGY',
     img: 'https://images.pexels.com/photos/8386422/pexels-photo-8386422.jpeg?auto=compress&cs=tinysrgb&w=600',
-    url: 'https://winder.ai/rag-vs-fine-tuning-2026-decision-framework/',
+    url: 'https://venta.hashnode.dev/rag-vs-fine-tuning-in-2026-a-decision-framework-for-llm-teams',
   },
   {
     date: 'May 30, 2026',
@@ -31,7 +31,7 @@ const articles = [
     excerpt: 'How Meridian Capital processes 40,000 documents a day autonomously, utilizing hierarchical multi-agent state architectures.',
     tag: 'ARCHITECTURE',
     img: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600',
-    url: 'https://www.stackai.com/blog/the-2026-guide-to-agentic-workflow-architectures',
+    url: 'https://venta.hashnode.dev/the-2026-guide-to-agentic-workflow-architectures',
   },
 ];
 
